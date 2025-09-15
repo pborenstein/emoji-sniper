@@ -1,0 +1,19 @@
+ # banned characters
+
+ # Emoticons (😀-🙏)
+    \U0001F600-\U0001F64F
+ 
+ # Miscellaneous Symbols and Pictographs (🌀-🗿) 
+    \U0001F300-\U0001F5FF
+
+ # Transport and Map Symbols (🚀-🛿)
+    \U0001F680-\U0001F6FF
+
+ # Flags (🇦-🇿)
+    \U0001F1E0-\U0001F1FF
+ 
+ # Supplemental Symbols (🤀-🫿)
+    \U0001F900-\U0001FAFF
+ 
+ # Common symbols that are often used as emojis
+    ✅❌⚠️✓❗️⭐️
