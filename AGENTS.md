@@ -48,6 +48,8 @@ IMPORTANT: We use UV exclusively for running and testing. Do not invoke `python`
 - Link related issues; add/update tests when changing behavior; update `banned.txt` examples or docs when relevant.
 - Keep PRs scoped; avoid unrelated refactors.
 
+Tip: For multi-line commit messages, avoid literal `\n` in `-m` strings (bash doesn’t expand them). Use multiple `-m` flags or `git commit -F` with a message file.
+
 ## Security & Configuration Tips
 - `banned.txt` supports Unicode ranges like `\U0001F600-\U0001F64F` and literal lines (e.g., `✅❌`). Lines starting with `#` are ignored.
 - Excludes: the CLI does not apply any default excludes. Add patterns explicitly with repeatable `--exclude` flags (e.g., `--exclude ".obsidian/*" --exclude node_modules/*`). The library helper `utils.file_discovery.find_files` uses an internal default exclude set only when `exclude_patterns` is `None`.
