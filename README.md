@@ -1,6 +1,6 @@
-# codex-sniper
+# emoji-sniper
 
-Scan files and folders (Obsidian vaults or any text repo) for banned characters or Unicode ranges defined in `banned.txt`. Outputs JSON (default) or human-readable text, with rotating logs written to `log/codex-sniper.log`.
+Scan files and folders (Obsidian vaults or any text repo) for banned characters or Unicode ranges defined in `banned.txt`. Outputs JSON (default) or human-readable text, with rotating logs written to `log/emoji-sniper.log`.
 
 ```
 ┌───────────────┐     ┌──────────────────┐     ┌────────────────────┐
@@ -9,8 +9,8 @@ Scan files and folders (Obsidian vaults or any text repo) for banned characters 
 └───────────────┘     └──────────────────┘     └────────────────────┘
          ▲                         │                     │
          │                         ▼                     ▼
-      Excludes               Name lookup           Report files (*.json)
-   (.obsidian/*, git)        (default on)          and rotating logs
+   Excludes (via             Name lookup           Report files (*.json)
+   repeated --exclude)       (default on)          and rotating logs
 ```
 
 ## Quick Start
@@ -31,18 +31,19 @@ Scan files and folders (Obsidian vaults or any text repo) for banned characters 
 - `scan VAULT_PATH` — scan files for banned characters (accepts a directory or a single file)
   - `--banned banned.txt` path to the banned list
   - `--ext .md,.txt` comma-separated extensions to include
-  - `--exclude pattern` repeatable glob/substring excludes (e.g., `.obsidian/*`)
+  - `--exclude pattern` repeatable glob/substring excludes (e.g., `.obsidian/*`); no defaults are applied unless you pass patterns
   - `--no-names` skip Unicode names (names included by default)
   - `--report` write a timestamped JSON report (to `--report-dir`, default `log/`)
   - `--report-dir PATH` destination directory for reports
   - `--report-prefix NAME` filename prefix (default `emoji-scan`)
   - `--fail-on-find` return exit code 1 if any matches found
   - `--list-files` print only unique file paths that contain matches
+  - `--quiet` suppress the text summary (text mode only)
   - `-v|-vv` increase verbosity (also logged to file)
 
 ## Project Layout
 ```
-codex-sniper/
+emoji-sniper/
 ├─ main.py                  # CLI (argparse)
 ├─ scanner/
 │  ├─ core.py               # SniperScanner + Occurrence

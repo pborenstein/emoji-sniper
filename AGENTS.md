@@ -46,6 +46,6 @@
 
 ## Security & Configuration Tips
 - `banned.txt` supports Unicode ranges like `\U0001F600-\U0001F64F` and literal lines (e.g., `✅❌`). Lines starting with `#` are ignored.
-- Default excludes include `.obsidian`, `.git`, `.DS_Store`, `__pycache__`, `node_modules`; configure more via `--exclude`.
-- Logging: activity is recorded to `log/codex-sniper.log`; increase verbosity with `-v`/`-vv`.
+- Excludes: the CLI does not apply any default excludes. Add patterns explicitly with repeatable `--exclude` flags (e.g., `--exclude ".obsidian/*" --exclude node_modules/*`). The library helper `utils.file_discovery.find_files` uses an internal default exclude set only when `exclude_patterns` is `None`.
+- Logging: activity is recorded to `log/emoji-sniper.log`; increase verbosity with `-v`/`-vv`.
 - Ensure files are UTF-8; use `--names` only when needed due to performance cost.
