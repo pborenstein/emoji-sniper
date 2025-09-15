@@ -65,3 +65,33 @@ Root logger writes to console and `log/codex-sniper.log` (rotating). Verbosity c
 
 ## Testing
 Pytest suite covers parser, discovery, scanner integration, and CLI JSON output.
+
+## Report Structure
+ASCII overview of the JSON written by `--report`:
+
+```
+report.json
+├─ stats
+│  ├─ vault_path: string
+│  ├─ files_scanned: int
+│  ├─ errors: int
+│  └─ occurrences: int
+└─ results[] (list of occurrences)
+   ├─ file: string (absolute path)
+   ├─ line: int (1-based)
+   ├─ col: int (1-based)
+   ├─ char: string (the matched character)
+   ├─ codepoint: string (e.g., "U+1F600")
+   └─ name: string (included by default; omitted with --no-names)
+```
+
+Example (compact):
+
+```
+{
+  "stats": {"vault_path": "/path/vault", "files_scanned": 2, "errors": 0, "occurrences": 3},
+  "results": [
+    {"file": "/path/vault/a.md", "line": 1, "col": 4, "char": "😀", "codepoint": "U+1F600", "name": "GRINNING FACE"}
+  ]
+}
+```
