@@ -115,10 +115,14 @@ def parse_args(argv: List[str] | None = None) -> argparse.Namespace:
 
     # substitute stub (future)
     sub = subparsers.add_parser(
-        "substitute", help="Preview or apply substitutions (stub)"
+        "substitute", help="Preview or apply substitutions"
     )
     sub.add_argument("vault_path", type=Path, help="Path to the directory to process")
+    sub.add_argument("--banned", type=Path, default=Path("banned.txt"), help="Path to banned list file (default: ./banned.txt)")
+    sub.add_argument("--allowed", type=Path, default=None, help="Optional allowlist file")
     sub.add_argument("--map", type=Path, required=True, help="Substitution map JSON file")
+    sub.add_argument("--ext", default=".md,.txt", help="Comma-separated file extensions to process")
+    sub.add_argument("--exclude", action="append", default=[], help="Glob patterns to exclude (repeatable)")
     sub.add_argument("--dry-run", action="store_true", help="Preview without writing changes")
 
     return parser.parse_args(argv)
@@ -180,9 +184,30 @@ def run_scan(args: argparse.Namespace) -> int:
 
 
 def run_substitute(args: argparse.Namespace) -> int:
-    # Placeholder for future implementation.
-    logging.error("substitute: not implemented yet. Use 'scan' for now.")
-    return 2
+    from utils.logging_setup import setup_logging
+    from scanner.substitute import Substitutor
+
+    setup_logging(args.verbose if hasattr(args, "verbose") else 0)
+    exts: Set[str] = {e.strip().lower() for e in args.ext.split(",") if e.strip()}
+    excludes: Set[str] = set(args.exclude) if args.exclude else set()
+
+    subber = Substitutor(
+        vault_path=args.vault_path,
+        banned_path=args.banned,
+        subs_path=args.map,
+        allowed_path=args.allowed,
+        exclude_patterns=excludes,
+        extensions=exts,
+    )
+    stats = subber.run(dry_run=args.dry_run)
+
+    # Simple console summary
+    print(
+        f"Files: {stats.files_scanned} | Changed: {stats.files_changed} | "
+        f"Replacements: {stats.replacements} | Unmapped banned: {stats.unmapped_banned} | "
+        f"Errors: {stats.errors}"
+    )
+    return 0 if stats.errors == 0 else 1
 
 
 def main(argv: List[str] | None = None) -> int:
