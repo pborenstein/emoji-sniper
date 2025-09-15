@@ -1,6 +1,17 @@
 # codex-sniper
 
-Scan files (e.g., an Obsidian vault) for banned characters or Unicode ranges defined in `banned.txt`. Outputs JSON (default) or human-readable text, with rotating logs written to `log/codex-sniper.log`.
+Scan files and folders (Obsidian vaults or any text repo) for banned characters or Unicode ranges defined in `banned.txt`. Outputs JSON (default) or human-readable text, with rotating logs written to `log/codex-sniper.log`.
+
+```
+┌───────────────┐     ┌──────────────────┐     ┌────────────────────┐
+│  Files/Dirs   │ ─▶─ │  Regex (banned)  │ ─▶─ │  Occurrences JSON  │
+│  (.md, .txt)  │     │  ranges + chars  │     │  + text summary    │
+└───────────────┘     └──────────────────┘     └────────────────────┘
+         ▲                         │                     │
+         │                         ▼                     ▼
+      Excludes               Name lookup           Report files (*.json)
+   (.obsidian/*, git)        (default on)          and rotating logs
+```
 
 ## Quick Start
 - Install with uv (editable):
@@ -30,14 +41,20 @@ Scan files (e.g., an Obsidian vault) for banned characters or Unicode ranges def
   - `-v|-vv` increase verbosity (also logged to file)
 
 ## Project Layout
-- `main.py` — CLI entry (argparse)
-- `scanner/core.py` — SniperScanner and occurrence model
-- `scanner/banned_parser.py` — parse `banned.txt` and build regex
-- `scanner/output.py` — JSON/text formatting
-- `utils/file_discovery.py` — recursive file finder with excludes
-- `utils/logging_setup.py` — console + rotating file logging
-- `tests/` — pytest suite
-- `doc/` — architecture and implementation notes
+```
+codex-sniper/
+├─ main.py                  # CLI (argparse)
+├─ scanner/
+│  ├─ core.py               # SniperScanner + Occurrence
+│  ├─ banned_parser.py      # Parse banned.txt, build regex
+│  └─ output.py             # JSON/text formatting
+├─ utils/
+│  ├─ file_discovery.py     # Walk files (ext + excludes)
+│  └─ logging_setup.py      # Console + rotating file logs
+├─ tests/                   # Pytest suite
+├─ doc/                     # Architecture notes
+└─ banned.txt               # Example banlist (ranges + literals)
+```
 
 ## Banned List Format
 - Unicode ranges: `\U0001F600-\U0001F64F`
