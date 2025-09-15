@@ -1,5 +1,5 @@
 [project]
-name = "codex-sniper"
+name = "emoji-sniper"
 version = "0.1.0"
 description = "Emoji/Banned character sniper CLI for Obsidian vaults"
 requires-python = ">=3.10"

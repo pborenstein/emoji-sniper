@@ -15,6 +15,8 @@ import re
 
 
 _RANGE_RE = re.compile(r"\\U([0-9A-Fa-f]{8})\s*-\s*\\U([0-9A-Fa-f]{8})")
+# Support literal character ranges like: 😀-😃
+_CHAR_RANGE_RE = re.compile(r"^(.)\s*-\s*(.)$")
 
 
 @dataclass(frozen=True)
@@ -32,10 +34,21 @@ def _parse_lines(lines: Iterable[str]) -> BannedSpec:
         if not s or s.startswith("#"):
             continue
 
+        # 1) Backslash-U form: \UXXXXXXXX-\UYYYYYYYY
         m = _RANGE_RE.search(s)
         if m:
             start = int(m.group(1), 16)
             end = int(m.group(2), 16)
+            if start > end:
+                start, end = end, start
+            ranges.append((start, end))
+            continue
+
+        # 2) Literal character range: X - Y (single code points)
+        m2 = _CHAR_RANGE_RE.match(s)
+        if m2 and len(m2.group(1)) == 1 and len(m2.group(2)) == 1:
+            c1, c2 = m2.group(1), m2.group(2)
+            start, end = ord(c1), ord(c2)
             if start > end:
                 start, end = end, start
             ranges.append((start, end))
@@ -103,4 +116,3 @@ def build_regex(spec: BannedSpec) -> re.Pattern[str]:
 
     char_class = "[" + "".join(parts) + "]"
     return re.compile(char_class)
-

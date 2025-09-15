@@ -1,7 +1,7 @@
-# codex-sniper Architecture
+# emoji-sniper Architecture
 
 ## Overview
-codex-sniper scans text files for characters matched by a compiled regex built from `banned.txt` (Unicode ranges and literal lines). Results are reported as structured occurrences and can be saved as timestamped JSON reports.
+emoji-sniper scans text files for characters matched by a compiled regex built from `banned.txt` (Unicode ranges and literal lines). Results are reported as structured occurrences and can be saved as timestamped JSON reports.
 
 ```
                          ┌────────────────────────┐
@@ -53,11 +53,11 @@ main(scan)
 ```
 
 ## Logging
-Root logger writes to console and `log/codex-sniper.log` (rotating). Verbosity controlled by `-v/-vv`.
+Root logger writes to console and `log/emoji-sniper.log` (rotating). Verbosity controlled by `-v/-vv`.
 
 ```
 ┌──────────┐        ┌──────────────────────────┐
-│ main.py  │  logs  │ log/codex-sniper.log     │
+│ main.py  │  logs  │ log/emoji-sniper.log     │
 └────┬─────┘ ─────▶ │ (1MB x 5 rotate, utf-8)  │
      │              └──────────────────────────┘
      └─ INFO/DEBUG to console (level = -v/-vv)

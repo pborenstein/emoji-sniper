@@ -14,7 +14,7 @@ def setup_logging(verbosity: int = 0, log_path: Path | None = None) -> None:
 
     log_dir = Path("log")
     log_dir.mkdir(parents=True, exist_ok=True)
-    logfile = log_path or (log_dir / "codex-sniper.log")
+    logfile = log_path or (log_dir / "emoji-sniper.log")
 
     fmt = logging.Formatter("%(asctime)s %(levelname)s %(name)s: %(message)s")
 
@@ -35,4 +35,3 @@ def setup_logging(verbosity: int = 0, log_path: Path | None = None) -> None:
     root.setLevel(level)
     root.addHandler(ch)
     root.addHandler(fh)
-
