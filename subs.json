@@ -1,0 +1,10 @@
+{
+  "map": {
+    "⭐": "*",
+    "✨": "*",
+    "🦙": "llama"
+  },
+  "regex": [
+    { "pattern": "(?:\\u2728) +brilliant", "replacement": "brilliant" }
+  ]
+}

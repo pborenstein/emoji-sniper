@@ -71,7 +71,7 @@ emoji-sniper substitute /path/to/vault --banned banned.txt --allowed allowed.txt
 - Applies a substitution map to banned characters outside allowed spans.
 - Options mirror `scan`: `--banned`, `--allowed`, `--ext`, `--exclude`, `--dry-run`.
 - Map format (JSON):
-  - Example: `{ "map": {"⭐": "*", "✨": "*", "🦙": "llama"}, "regex": [{"pattern": "(?:\\u2728)\\s+brilliant", "replacement": "brilliant"}] }`
+  - Example: `{ "map": {"⭐": "*", "✨": "*", "🦙": "llama"}, "regex": [{"pattern": "(?:\\u2728) +brilliant", "replacement": "brilliant"}] }`
   - Regex rules are applied first when the match contains at least one banned character and does not overlap an allowed span.
 
 ## Examples

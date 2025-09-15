@@ -121,7 +121,8 @@ class Substitutor:
                         continue
 
                     # Resolve overlapping edits by keeping the first occurrence of a region
-                    edits.sort(key=lambda t: (t[0], t[1]))
+                    # Prefer longer spans at the same start so regex rules win over single-char maps
+                    edits.sort(key=lambda t: (t[0], -(t[1] - t[0])))
                     resolved: List[Tuple[int, int, str]] = []
                     last_end = -1
                     for s, e, rep in edits:
@@ -163,4 +164,3 @@ class Substitutor:
             unmapped_banned=unmapped_banned,
             errors=errors,
         )
-
