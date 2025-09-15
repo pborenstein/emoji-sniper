@@ -20,7 +20,7 @@
   - `python3 main.py scan /path/to/vault --banned banned.txt --format json`
   - Text mode: `python3 main.py scan ./vault --format txt -v`
 - Filter by extensions: `--ext .md,.txt`; exclude: `--exclude ".obsidian/*" --exclude node_modules/*`
-- Include Unicode names (slower): `--names`
+- Names included by default; skip with `--no-names`.
 - Reports: `--report [--report-dir DIR] [--report-prefix NAME]`
  - CI-friendly: `--fail-on-find` exits with code 1 if any found; `--list-files` prints file paths only
 

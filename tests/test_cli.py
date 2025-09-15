@@ -26,6 +26,29 @@ def test_cli_scan_json_output(tmp_path: Path, capsys):
     assert any(r["file"].endswith("file.md") for r in payload["results"])  # sanity
 
 
+def test_cli_includes_names_by_default(tmp_path: Path, capsys):
+    vault = tmp_path / "vault"
+    vault.mkdir()
+    (vault / "file.md").write_text("Hi 😀", encoding="utf-8")
+    banned = tmp_path / "banned.txt"
+    banned.write_text("\\U0001F600-\\U0001F64F\n", encoding="utf-8")
+
+    code = main([
+        "scan",
+        str(vault),
+        "--banned",
+        str(banned),
+        "--format",
+        "json",
+    ])
+    assert code == 0
+    out = capsys.readouterr().out
+    payload = json.loads(out)
+    result = payload["results"][0]
+    assert "name" in result and isinstance(result["name"], str)
+
+
+
 def test_cli_writes_report(tmp_path: Path, capsys):
     vault = tmp_path / "vault"
     vault.mkdir()

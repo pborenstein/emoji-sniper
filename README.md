@@ -21,7 +21,7 @@ Scan files (e.g., an Obsidian vault) for banned characters or Unicode ranges def
   - `--banned banned.txt` path to the banned list
   - `--ext .md,.txt` comma-separated extensions to include
   - `--exclude pattern` repeatable glob/substring excludes (e.g., `.obsidian/*`)
-  - `--names` include Unicode names (slower)
+  - `--no-names` skip Unicode names (names included by default)
   - `--report` write a timestamped JSON report (to `--report-dir`, default `log/`)
   - `--report-dir PATH` destination directory for reports
   - `--report-prefix NAME` filename prefix (default `emoji-scan`)

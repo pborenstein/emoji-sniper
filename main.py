@@ -79,9 +79,9 @@ def parse_args(argv: List[str] | None = None) -> argparse.Namespace:
         help="Comma-separated list of file extensions to scan (default: .md,.txt)",
     )
     scan.add_argument(
-        "--names",
+        "--no-names",
         action="store_true",
-        help="Include Unicode names in results (slower)",
+        help="Do not include Unicode names in results (faster)",
     )
     scan.add_argument(
         "--fail-on-find",
@@ -133,7 +133,7 @@ def run_scan(args: argparse.Namespace) -> int:
         banned_path=args.banned,
         exclude_patterns=excludes,
         extensions=exts,
-        include_names=args.names,
+        include_names=not args.no_names,
     )
 
     results, stats = scanner.scan()
