@@ -9,13 +9,15 @@ Scan files (e.g., an Obsidian vault) for banned characters or Unicode ranges def
 - Run a scan (JSON):
   - `emoji-sniper scan /path/to/vault --banned banned.txt`
   - Save a report file: `emoji-sniper scan ./vault --report --report-dir log`
+  - Fail on any find: `emoji-sniper scan ./vault --fail-on-find`
+  - List files with matches: `emoji-sniper scan ./vault --list-files`
 - Text + summary:
   - `emoji-sniper scan ./vault --format txt -v`
 - Run tests:
   - `uv run pytest`
 
 ## CLI Overview
-- `scan VAULT_PATH` — scan files for banned characters
+- `scan VAULT_PATH` — scan files for banned characters (accepts a directory or a single file)
   - `--banned banned.txt` path to the banned list
   - `--ext .md,.txt` comma-separated extensions to include
   - `--exclude pattern` repeatable glob/substring excludes (e.g., `.obsidian/*`)
@@ -23,6 +25,8 @@ Scan files (e.g., an Obsidian vault) for banned characters or Unicode ranges def
   - `--report` write a timestamped JSON report (to `--report-dir`, default `log/`)
   - `--report-dir PATH` destination directory for reports
   - `--report-prefix NAME` filename prefix (default `emoji-scan`)
+  - `--fail-on-find` return exit code 1 if any matches found
+  - `--list-files` print only unique file paths that contain matches
   - `-v|-vv` increase verbosity (also logged to file)
 
 ## Project Layout

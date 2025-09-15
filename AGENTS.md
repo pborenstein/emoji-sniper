@@ -21,13 +21,15 @@
   - Text mode: `python3 main.py scan ./vault --format txt -v`
 - Filter by extensions: `--ext .md,.txt`; exclude: `--exclude ".obsidian/*" --exclude node_modules/*`
 - Include Unicode names (slower): `--names`
- - Reports: `--report [--report-dir DIR] [--report-prefix NAME]`
+- Reports: `--report [--report-dir DIR] [--report-prefix NAME]`
+ - CI-friendly: `--fail-on-find` exits with code 1 if any found; `--list-files` prints file paths only
 
 ## Coding Style & Naming Conventions
 - Python 3.10+; 4-space indentation; type hints required for public functions.
 - Naming: modules/functions `snake_case`, classes `CapWords`, constants `UPPER_SNAKE`.
 - Prefer `pathlib.Path`, `logging` over `print` (except CLI output in `main.py`).
 - Keep CLI behavior in `main.py`; business logic in `scanner/*`; reusable utilities in `utils/*`.
+- `scan` accepts a directory or a single file path.
 - Optional formatters: `black` and `ruff` (if installed). Aim for clean diffs and small, focused changes.
 
 ## Testing Guidelines

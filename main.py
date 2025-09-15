@@ -84,6 +84,16 @@ def parse_args(argv: List[str] | None = None) -> argparse.Namespace:
         help="Include Unicode names in results (slower)",
     )
     scan.add_argument(
+        "--fail-on-find",
+        action="store_true",
+        help="Exit with code 1 if any banned characters are found",
+    )
+    scan.add_argument(
+        "--list-files",
+        action="store_true",
+        help="Print only unique file paths that contain banned characters",
+    )
+    scan.add_argument(
         "--verbose",
         "-v",
         action="count",
@@ -130,13 +140,18 @@ def run_scan(args: argparse.Namespace) -> int:
 
     payload = format_results_as_json(results, stats)
 
-    if args.format == "json":
-        print(json.dumps(payload, ensure_ascii=False, indent=2))
+    if args.list_files:
+        files = sorted({r.file for r in results})
+        for f in files:
+            print(f)
     else:
-        print(format_results_as_text(results))
-        if not args.quiet:
-            print()
-            print_summary(stats)
+        if args.format == "json":
+            print(json.dumps(payload, ensure_ascii=False, indent=2))
+        else:
+            print(format_results_as_text(results))
+            if not args.quiet:
+                print()
+                print_summary(stats)
 
     if args.report:
         try:
@@ -151,7 +166,9 @@ def run_scan(args: argparse.Namespace) -> int:
             logging.info("Report written to %s", fpath)
         except Exception as e:
             logging.error("Failed to write report: %s", e)
-
+    
+    if args.fail_on_find and stats.get("occurrences", 0) > 0:
+        return 1
     return 0
 
 

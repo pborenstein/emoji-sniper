@@ -40,6 +40,13 @@ def find_files(
     root = Path(root_path)
     if not root.exists():
         raise FileNotFoundError(f"Path does not exist: {root}")
+    # Support scanning a single file
+    if root.is_file():
+        if isinstance(extensions, list):
+            extensions = set(extensions)
+        if not extensions or root.suffix.lower() in extensions:  # type: ignore[operator]
+            return [root]
+        return []
     if not root.is_dir():
         raise NotADirectoryError(f"Path is not a directory: {root}")
 
@@ -76,4 +83,3 @@ def find_files(
 
     walk(root)
     return sorted(results)
-
