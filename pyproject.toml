@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "Emoji/Banned character sniper CLI for Obsidian vaults"
 requires-python = ">=3.10"
 readme = "README.md"
-license = { text = "MIT" }
+license = "MIT"
 authors = [{ name = "Contributors" }]
 dependencies = []
 
@@ -47,3 +47,7 @@ dev = [
   "black>=24.0",
   "mypy>=1.8.0",
 ]
+
+[tool.setuptools]
+py-modules = ["main"]
+packages = ["scanner", "utils"]
