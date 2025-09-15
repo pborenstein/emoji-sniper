@@ -6,19 +6,18 @@ requires-python = ">=3.10"
 readme = "README.md"
 license = "MIT"
 authors = [{ name = "Contributors" }]
-dependencies = []
-
-[project.scripts]
-emoji-sniper = "main:main"
-
-[project.optional-dependencies]
-dev = [
-  "pytest>=7.0",
+dependencies = [
+  "pytest>=8.0",
   "pytest-cov>=4.0",
   "ruff>=0.5.0",
   "black>=24.0",
   "mypy>=1.8.0",
 ]
+
+[project.scripts]
+emoji-sniper = "main:main"
+
+ 
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
@@ -38,15 +37,6 @@ ignore = []
 
 [tool.uv]
 package = true
-
-[dependency-groups]
-dev = [
-  "pytest>=8.0",
-  "pytest-cov>=4.0",
-  "ruff>=0.5.0",
-  "black>=24.0",
-  "mypy>=1.8.0",
-]
 
 [tool.setuptools]
 py-modules = ["main"]

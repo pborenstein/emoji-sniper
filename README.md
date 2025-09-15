@@ -16,7 +16,7 @@ Extract, scan, and report banned characters (e.g., emoji) in Obsidian vaults or 
 ## Quick start
 
 - Install with uv
-  - Create venv + deps: `uv venv && uv sync --group dev`
+  - Create venv + deps: `uv sync`  (uv will create the venv automatically)
   - Global command (editable): `uv tool install --editable .`
 - Sanity check CLI: `emoji-sniper --help`
 - Scan to JSON: `emoji-sniper scan "$HOME/Obsidian/MyVault" --banned banned.txt`
@@ -24,7 +24,7 @@ Extract, scan, and report banned characters (e.g., emoji) in Obsidian vaults or 
 - Top files only: `emoji-sniper scan ./vault --list-files`
 - Fail in CI on any find: `emoji-sniper scan ./vault --fail-on-find`
 - Text mode + summary: `emoji-sniper scan ./vault --format txt -v`
-- Run tests: `uv run pytest`
+- Run tests: `uv run python -m pytest tests/`
 
 During development (no tool install):
 
@@ -37,6 +37,9 @@ uv run python main.py scan ./vault --format txt -v
 
 # Filter by extensions and exclude patterns
 uv run python main.py scan ./vault --ext .md,.txt --exclude ".obsidian/*" --exclude node_modules/*
+
+# Run the test suite (exact incantation I always forget)
+uv run python -m pytest tests/
 ```
 
 ## Commands
@@ -91,8 +94,8 @@ This project uses uv for dependency management.
 
 ```bash
 uv tool install --editable .
-# or for development
-uv venv && uv sync --group dev
+# or for development (creates venv automatically)
+uv sync
 ```
 
 ## Documentation

@@ -11,11 +11,15 @@
 - `idea.md`: design notes.
 
 ## Build, Test, and Development Commands
-- Using uv (preferred):
-  - Create venv + sync: `uv venv && uv sync --group dev`
-  - Run tests: `uv run pytest`
+- Using uv (preferred, modeled after ../tagex):
+  - Create venv + sync: `uv sync` (uv auto-creates the venv)
+  - Run tests: `uv run python -m pytest tests/`
   - Run CLI (JSON): `uv run python main.py scan ./vault --banned banned.txt`
   - Save a report: `uv run python main.py scan ./vault --report --report-dir log`
+ 
+IMPORTANT: We use UV exclusively for running and testing. Do not invoke `python` directly.
+- Always run tests with: `uv run python -m pytest tests/`
+- Never run “naked” Python or pip; prefer `uv run`, `uv venv`, `uv sync`.
 - Python directly:
   - `python3 main.py scan /path/to/vault --banned banned.txt --format json`
   - Text mode: `python3 main.py scan ./vault --format txt -v`
