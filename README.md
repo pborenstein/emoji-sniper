@@ -41,6 +41,10 @@ Scan files and folders (Obsidian vaults or any text repo) for banned characters 
   - `--quiet` suppress the text summary (text mode only)
   - `-v|-vv` increase verbosity (also logged to file)
 
+- `substitute` — stub/not implemented yet
+  - Present for future substitutions feature; currently prints an error and exits with code 2
+  - Planned usage shape: `emoji-sniper substitute VAULT_PATH --map MAP.json [--dry-run]`
+
 ## Project Layout
 ```
 emoji-sniper/
