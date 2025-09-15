@@ -9,6 +9,7 @@ import unicodedata as ud
 
 from utils.file_discovery import find_files
 from .banned_parser import parse_banned_file, build_regex
+from .allowed_parser import parse_allowed_file, build_allowed_regex
 
 
 logger = logging.getLogger(__name__)
@@ -29,18 +30,24 @@ class SniperScanner:
         self,
         vault_path: Path,
         banned_path: Path,
+        allowed_path: Path | None = None,
         exclude_patterns: Set[str] | None = None,
         extensions: Set[str] | None = None,
         include_names: bool = False,
     ) -> None:
         self.vault_path = Path(vault_path)
         self.banned_path = Path(banned_path)
+        self.allowed_path = Path(allowed_path) if allowed_path is not None else None
         self.exclude_patterns = exclude_patterns or set()
         self.extensions = extensions or {".md", ".txt"}
         self.include_names = include_names
 
         spec = parse_banned_file(self.banned_path)
         self.pattern: re.Pattern[str] = build_regex(spec)
+        self.allowed_pattern: re.Pattern[str] | None = None
+        if self.allowed_path and self.allowed_path.exists():
+            aspec = parse_allowed_file(self.allowed_path)
+            self.allowed_pattern = build_allowed_regex(aspec)
 
     def _iter_file_lines(self, path: Path) -> Iterable[Tuple[int, str]]:
         try:
@@ -61,9 +68,19 @@ class SniperScanner:
             file_count += 1
             try:
                 for ln, text in self._iter_file_lines(fp):
+                    allowed_spans: List[Tuple[int, int]] = []
+                    if self.allowed_pattern is not None:
+                        for am in self.allowed_pattern.finditer(text):
+                            allowed_spans.append((am.start(), am.end()))
+
                     for m in self.pattern.finditer(text):
+                        idx = m.start()
+                        # Skip if within an allowed span
+                        if allowed_spans and any(s <= idx < e for s, e in allowed_spans):
+                            continue
+
                         ch = m.group(0)
-                        col = m.start() + 1  # 1-based
+                        col = idx + 1  # 1-based
                         cp = f"U+{ord(ch):04X}"
                         name = None
                         if self.include_names:
@@ -93,4 +110,3 @@ class SniperScanner:
             "occurrences": len(occurrences),
         }
         return occurrences, stats
-

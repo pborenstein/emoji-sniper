@@ -46,6 +46,12 @@ def parse_args(argv: List[str] | None = None) -> argparse.Namespace:
         help="Path to banned list file (default: ./banned.txt)",
     )
     scan.add_argument(
+        "--allowed",
+        type=Path,
+        default=None,
+        help="Optional path to allowlist file for sequences to permit",
+    )
+    scan.add_argument(
         "--format",
         choices=["json", "txt"],
         default="json",
@@ -131,6 +137,7 @@ def run_scan(args: argparse.Namespace) -> int:
     scanner = SniperScanner(
         vault_path=args.vault_path,
         banned_path=args.banned,
+        allowed_path=args.allowed,
         exclude_patterns=excludes,
         extensions=exts,
         include_names=not args.no_names,

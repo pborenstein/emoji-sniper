@@ -2,18 +2,47 @@
 
  # Emoticons (😀-🙏)
     \U0001F600-\U0001F64F
+ # Examples: 😀 😃 😅 😂 😊 🙏
  
  # Miscellaneous Symbols and Pictographs (🌀-🗿) 
     \U0001F300-\U0001F5FF
+ # Examples: 🌀 🎯 🎁 🔥 💡 🗿
 
  # Transport and Map Symbols (🚀-🛿)
     \U0001F680-\U0001F6FF
+ # Examples: 🚀 🚁 🚗 🚦 🗺️
 
  # Flags (🇦-🇿)
     \U0001F1E0-\U0001F1FF
+ # Examples: 🇺🇸 🇬🇧 🇯🇵 🇪🇺
  
  # Supplemental Symbols (🤀-🫿)
     \U0001F900-\U0001FAFF
+ # Examples: 🤖 🥳 🧠 🧪 🫠
+ 
+ # Dingbats (✂-➿)
+    \U00002700-\U000027BF
+ # Examples: ✂ ✨ ✅ ❌ ➿
+
+ # Miscellaneous Symbols (☀-⛿)
+    \U00002600-\U000026FF
+ # Examples: ☀ ☔ ☕ ☎ ✈ ⚠ ⛔
+
+ # Geometric Shapes (▪-◿)
+    \U000025A0-\U000025FF
+ # Examples: ▪ ▫ ▴ ▾ ◼ ◻ ◯
+
+ # Geometric Shapes Extended (🞀-🟿)
+    \U0001F780-\U0001F7FF
+ # Examples: 🟠 🟢 🟣 🟦 🟥 🟩
+
+ # Miscellaneous Symbols and Arrows (⬀-⯿)
+    \U00002B00-\U00002BFF
+ # Examples: ⬆ ⬇ ⬅ ➡ ⬛ ⬜ ⭐
+
+ # Ornamental Dingbats (🙀-🙿)
+    \U0001F650-\U0001F67F
+ # Examples: 🕴 🖤 🝰 🝳 (varies by font support)
  
  # Common symbols that are often used as emojis
     ✅❌⚠️✓❗️⭐️

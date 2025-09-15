@@ -1,0 +1,7 @@
+# Allowed sequences and regex patterns
+# Lines starting with '#' are comments; blanks ignored
+# Lines starting with 're:' are raw regex; other lines are literal sequences
+
+# Allow the phrase: sparkles followed by a space and the word brilliant
+✨ brilliant
+

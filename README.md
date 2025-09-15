@@ -20,6 +20,7 @@ Extract, scan, and report banned characters (e.g., emoji) in Obsidian vaults or 
   - Global command (editable): `uv tool install --editable .`
 - Sanity check CLI: `emoji-sniper --help`
 - Scan to JSON: `emoji-sniper scan "$HOME/Obsidian/MyVault" --banned banned.txt`
+- Allowlist sequences (optional): `emoji-sniper scan ./vault --banned banned.txt --allowed allowed.txt`
 - Save a report: `emoji-sniper scan ./vault --report --report-dir log`
 - Top files only: `emoji-sniper scan ./vault --list-files`
 - Fail in CI on any find: `emoji-sniper scan ./vault --fail-on-find`
@@ -55,6 +56,7 @@ emoji-sniper /path/to/vault substitute --map MAP.json [--dry-run]
 ### scan options
 
 - `--banned PATH`: Banlist file (default: `./banned.txt`)
+- `--allowed PATH` (optional): Allowlist file of sequences/regex to permit; any banned match entirely within an allowed span is suppressed.
 - `--format {json,txt}`: Output format (default: json)
 - `--ext ".md,.txt"`: Comma-separated extensions to include
 - `--exclude PATTERN`: Repeatable excludes (glob or substring). The CLI applies no defaults; pass patterns explicitly.
@@ -124,3 +126,9 @@ emoji-sniper/
 - Unicode ranges: `\U0001F600-\U0001F64F`
 - Literal characters on a line: `✅❌`
 - Lines starting with `#` are comments; blanks ignored
+
+## Allowlist format
+
+- Lines starting with `#` are comments; blanks ignored
+- Lines starting with `re:` are raw regular expressions (e.g., `re:(?:\U0001F999){3}` for a triple llama)
+- Any other non-empty line is treated as a literal sequence to allow (entire line), e.g., `🦙🦙🦙`
