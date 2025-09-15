@@ -52,6 +52,22 @@ def parse_args(argv: List[str] | None = None) -> argparse.Namespace:
         help="Output format (default: json)",
     )
     scan.add_argument(
+        "--report",
+        action="store_true",
+        help="Write a timestamped JSON report to a directory (default: ./log)",
+    )
+    scan.add_argument(
+        "--report-dir",
+        type=Path,
+        default=Path("log"),
+        help="Directory to write reports when --report is used",
+    )
+    scan.add_argument(
+        "--report-prefix",
+        default="emoji-scan",
+        help="Filename prefix for reports when --report is used",
+    )
+    scan.add_argument(
         "--exclude",
         action="append",
         default=[],
@@ -93,12 +109,11 @@ def parse_args(argv: List[str] | None = None) -> argparse.Namespace:
 
 
 def run_scan(args: argparse.Namespace) -> int:
-    log_level = logging.WARNING
-    if args.verbose >= 2:
-        log_level = logging.DEBUG
-    elif args.verbose == 1:
-        log_level = logging.INFO
-    logging.basicConfig(level=log_level, format="%(levelname)s: %(message)s")
+    # Configure logging to console and file
+    from utils.logging_setup import setup_logging
+
+    setup_logging(args.verbose)
+    logging.info("Starting scan")
 
     exts: Set[str] = {e.strip().lower() for e in args.ext.split(",") if e.strip()}
     excludes: Set[str] = set(args.exclude) if args.exclude else set()
@@ -113,14 +128,29 @@ def run_scan(args: argparse.Namespace) -> int:
 
     results, stats = scanner.scan()
 
+    payload = format_results_as_json(results, stats)
+
     if args.format == "json":
-        payload = format_results_as_json(results, stats)
         print(json.dumps(payload, ensure_ascii=False, indent=2))
     else:
         print(format_results_as_text(results))
         if not args.quiet:
             print()
             print_summary(stats)
+
+    if args.report:
+        try:
+            args.report_dir.mkdir(parents=True, exist_ok=True)
+            from datetime import datetime
+
+            ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+            fname = f"{args.report_prefix}_{ts}.json"
+            fpath = args.report_dir / fname
+            with open(fpath, "w", encoding="utf-8") as f:
+                json.dump(payload, f, ensure_ascii=False, indent=2)
+            logging.info("Report written to %s", fpath)
+        except Exception as e:
+            logging.error("Failed to write report: %s", e)
 
     return 0
 
@@ -144,4 +174,3 @@ def main(argv: List[str] | None = None) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-
