@@ -106,6 +106,7 @@ uv sync
 ## Documentation
 
 - Architecture: `doc/ARCHITECTURE.md`
+- Emoji ranges and guidance: `doc/EMOJI-RANGES.md`
 
 ## Project layout
 
@@ -135,3 +136,20 @@ emoji-sniper/
 - Lines starting with `#` are comments; blanks ignored
 - Lines starting with `re:` are raw regular expressions (e.g., `re:(?:\U0001F999){3}` for a triple llama)
 - Any other non-empty line is treated as a literal sequence to allow (entire line), e.g., `🦙🦙🦙`
+
+### Common allowlist examples
+
+These examples permit a few high-signal symbols often used in docs without opening entire ranges. Prefer these to narrowing ranges in `banned.txt`.
+
+```
+# allowed.txt
+# Common exemptions
+✅
+❌
+⚠️
+✓
+⭐️
+
+# Or allow only in specific contexts (regex):
+re:^\s*⭐️\s+Important\b
+```

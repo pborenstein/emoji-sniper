@@ -5,3 +5,13 @@
 # Allow the phrase: sparkles followed by a space and the word brilliant
 ✨ brilliant
 
+# Common exemptions (optional)
+✅
+❌
+⚠️
+✓
+⭐️
+
+# Or confine allowances to specific contexts (regex)
+# Example: star is allowed only when starting a heading 'Important'
+re:^\s*⭐️\s+Important\b
