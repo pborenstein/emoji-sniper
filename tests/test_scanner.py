@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from scanner.core import SniperScanner
+from emoji_sniper.core import SniperScanner
 
 
 def test_scanner_finds_occurrences(tmp_path: Path):

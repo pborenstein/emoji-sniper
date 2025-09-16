@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from utils.file_discovery import find_files
+from emoji_sniper.utils.file_discovery import find_files
 
 
 def test_find_files_with_excludes_and_exts(tmp_path: Path):

@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from scanner.core import SniperScanner
+from emoji_sniper.core import SniperScanner
 
 
 def test_allowed_triplet_llama_suppresses(tmp_path: Path):

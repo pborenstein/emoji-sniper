@@ -1,7 +1,7 @@
 from pathlib import Path
 import json
 
-from main import main
+from emoji_sniper.main import main
 
 
 def test_cli_scan_json_output(tmp_path: Path, capsys):

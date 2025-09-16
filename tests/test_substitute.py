@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from scanner.substitute import Substitutor
+from emoji_sniper.core.substitute import Substitutor
 
 
 def test_substitute_replaces_gaudy_and_respects_allowed(tmp_path: Path):

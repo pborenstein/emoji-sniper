@@ -15,3 +15,7 @@
 # Or confine allowances to specific contexts (regex)
 # Example: star is allowed only when starting a heading 'Important'
 re:^\s*⭐️\s+Important\b
+❋
+✷
+🦙🦙🦙
+

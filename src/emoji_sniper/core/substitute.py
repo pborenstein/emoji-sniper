@@ -6,7 +6,7 @@ from typing import Dict, Iterable, List, Set, Tuple
 import logging
 import re
 
-from utils.file_discovery import find_files
+from ..utils.file_discovery import find_files
 from .banned_parser import parse_banned_file, build_regex
 from .allowed_parser import parse_allowed_file, build_allowed_regex
 from .substitution_map import SubstitutionMap

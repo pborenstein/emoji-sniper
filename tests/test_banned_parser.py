@@ -1,7 +1,7 @@
 from pathlib import Path
 import tempfile
 
-from scanner.banned_parser import parse_banned_file, build_regex
+from emoji_sniper.core.banned_parser import parse_banned_file, build_regex
 
 
 def write(tmpdir: Path, name: str, content: str) -> Path:

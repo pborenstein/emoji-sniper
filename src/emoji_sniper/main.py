@@ -14,8 +14,8 @@ import logging
 from pathlib import Path
 from typing import List, Set
 
-from scanner.core import SniperScanner
-from scanner.output import (
+from .core import SniperScanner
+from .core.output import (
     format_results_as_json,
     format_results_as_text,
     print_summary,
@@ -130,7 +130,7 @@ def parse_args(argv: List[str] | None = None) -> argparse.Namespace:
 
 def run_scan(args: argparse.Namespace) -> int:
     # Configure logging to console and file
-    from utils.logging_setup import setup_logging
+    from .utils.logging_setup import setup_logging
 
     setup_logging(args.verbose)
     logging.info("Starting scan")
@@ -184,8 +184,8 @@ def run_scan(args: argparse.Namespace) -> int:
 
 
 def run_substitute(args: argparse.Namespace) -> int:
-    from utils.logging_setup import setup_logging
-    from scanner.substitute import Substitutor
+    from .utils.logging_setup import setup_logging
+    from .core.substitute import Substitutor
 
     setup_logging(args.verbose if hasattr(args, "verbose") else 0)
     exts: Set[str] = {e.strip().lower() for e in args.ext.split(",") if e.strip()}
