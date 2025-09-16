@@ -207,3 +207,6 @@ temp/
 
 tag_migration_log.json
 tag-*.json
+
+# Project-specific
+emojis.nogit.json
